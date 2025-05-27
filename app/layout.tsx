@@ -32,7 +32,8 @@ export default function RootLayout({
         <ClerkProvider appearance={{ variables:{colorPrimary:'#fe5933'}}}>
 
         <Navigation />
-        {children}
+       
+            {children}
 
         </ClerkProvider>
       </body>
