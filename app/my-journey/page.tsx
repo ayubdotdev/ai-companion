@@ -87,33 +87,34 @@ const Profile = async () => {
           </div>
         </section>
 
-        <div className="mt-8">
-          <Accordion type="multiple">
-            <AccordionItem value="recent">
-              <AccordionTrigger className="text-2xl font-bold">
-                Recent Sessions
-              </AccordionTrigger>
-              <AccordionContent>
-                <CompanionsList
-                  title="Recent Sessions"
-                  companions={sessionHistory}
-                />
-              </AccordionContent>
-            </AccordionItem>
+        <div className="mt-8 rounded-2xl border border-gray-200 shadow-md bg-white overflow-hidden">
+  <Accordion type="multiple">
+    <AccordionItem value="recent">
+      <AccordionTrigger className="text-2xl font-bold px-6 py-4">
+        Recent Sessions
+      </AccordionTrigger>
+      <AccordionContent className="bg-gray-50 px-6 py-4">
+        <CompanionsList
+          title="Recent Sessions"
+          companions={sessionHistory}
+        />
+      </AccordionContent>
+    </AccordionItem>
 
-            <AccordionItem value="companions">
-              <AccordionTrigger className="text-2xl font-bold">
-                My Companions {`(${companions.length})`}
-              </AccordionTrigger>
-              <AccordionContent>
-                <CompanionsList
-                  title="My Companions"
-                  companions={companions}
-                />
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
+    <AccordionItem value="companions">
+      <AccordionTrigger className="text-2xl font-bold px-6 py-4 border-t border-gray-200">
+        My Companions ({companions.length})
+      </AccordionTrigger>
+      <AccordionContent className="bg-gray-50 px-6 py-4">
+        <CompanionsList
+          title="My Companions"
+          companions={companions}
+        />
+      </AccordionContent>
+    </AccordionItem>
+  </Accordion>
+</div>
+
       </main>
     </AnimatedHeading>
   );

@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 interface CompanionCardProps {
   id: string;
@@ -25,6 +27,11 @@ const CompanionCard = ({
   bookmarked,
 }: CompanionCardProps) => {
   const pathname = usePathname();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = () => {
+    setIsLoading(true);
+  };
 
   return (
     <motion.div
@@ -88,18 +95,19 @@ const CompanionCard = ({
         </div>
       </div>
 
-      <Link href={`/companions/${id}`} className="w-full mt-2">
+      <Link href={`/companions/${id}`} className="w-full mt-2" onClick={handleClick}>
         <motion.button
           whileHover={{ 
             scale: 1.02,
-            // backgroundColor: "#000000",
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
           }}
           whileTap={{ scale: 0.98 }}
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
-          className="btn-primary w-full justify-center gap-2 bg-blue-400 hover:bg-blue/90"
+          className="btn-primary w-full justify-center gap-2 bg-black hover:bg-black/90 flex items-center"
+          disabled={isLoading}
         >
-          Launch Session
+          {isLoading && <Loader2 className="w-5 h-5 animate-spin" />}
+          {isLoading ? "Launching..." : "Launch Session"}
         </motion.button>
       </Link>
     </motion.div>

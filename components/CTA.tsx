@@ -3,8 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 const Cta = () => {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleClick = () => {
+        setIsLoading(true);
+    };
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -94,8 +102,15 @@ const Cta = () => {
                         height={12}
                     />
                 </motion.div>
-                <Link href="/companions/new">
-                    <p>Build a New Companion</p>
+                <Link href="/companions/new" onClick={handleClick}>
+                    <motion.div
+                        className="flex items-center justify-center gap-2"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        {isLoading && <Loader2 className="w-5 h-5 animate-spin" />}
+                        <p>{isLoading ? "Building..." : "Build a New Companion"}</p>
+                    </motion.div>
                 </Link>
             </motion.button>
         </motion.section>

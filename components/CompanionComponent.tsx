@@ -79,6 +79,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
         const onSpeechStart = () => setIsSpeaking(true);
         const onSpeechEnd = () => {
             setIsSpeaking(false);
+            
             // If AI finished speaking, it's user's turn
             if (callStatus === CallStatus.ACTIVE) {
                 setIsUserTurn(true);
@@ -225,7 +226,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >
                         <motion.div
-                            whileHover={{ rotate: 5, scale: 1.05 }}
+                            whileHover={{ scale: 1.05 }}
                             transition={{ type: "spring", stiffness: 400, damping: 10 }}
                         >
                             <Image 
@@ -253,7 +254,6 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                         transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     >
                         <motion.div
-                            whileHover={{ rotate: 360 }}
                             transition={{ duration: 0.5, ease: "easeInOut" }}
                         >
                             <Image 
