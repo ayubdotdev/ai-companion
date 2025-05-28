@@ -16,22 +16,23 @@ const Page = async () => {
     <main>
 
       <AnimatedHeading>
-        <p className="text-lg text-gray-600 leading-relaxed">
-          Welcome to EduNova
-          <span className="inline-block align-middle ml-2 mr-1">
-            <Image
-              src="/images/logo.png"
-              alt="EduNova Logo"
-              width={56}
-              height={56}
-              priority
-            />
-          </span>
-           <br />
-          Your AI-powered learning companion platform. <br />
-          Create personalized AI tutors that adapt to your<br/> style and make
-          mastering any subject interactive, engaging, and effective.
-        </p>
+      <p className="text-lg text-gray-600 leading-relaxed">
+  <span className="block">
+    Welcome to EduNova
+   </span>
+  <span className="block mt-2">
+    Your AI-powered learning companion platform.
+  </span>
+
+  <span className="block mt-1">
+    Create personalized AI tutors<br/> that adapt to your style,
+  </span>
+
+  <span className="block mt-1">
+    And make mastering any subject interactive, engaging, and effective.
+  </span>
+</p>
+
 
       </AnimatedHeading>
       <AnimatedHeading>Popular Companions</AnimatedHeading>
