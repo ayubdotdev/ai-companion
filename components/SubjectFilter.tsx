@@ -11,7 +11,7 @@ import { subjects } from "@/constants";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-// import { formUrlQuery, removeKeysFromUrlQuery } from "@jsmastery/utils";
+import { formUrlQuery, removeKeysFromUrlQuery } from "@jsmastery/utils";
 
 const SubjectFilter = () => {
     const router = useRouter();
@@ -48,22 +48,22 @@ const SubjectFilter = () => {
         })
     };
 
-    // useEffect(() => {
-    //     let newUrl = "";
-    //     if (subject === "all") {
-    //         newUrl = removeKeysFromUrlQuery({
-    //             params: searchParams.toString(),
-    //             keysToRemove: ["subject"],
-    //         });
-    //     } else {
-    //         newUrl = formUrlQuery({
-    //             params: searchParams.toString(),
-    //             key: "subject",
-    //             value: subject,
-    //         });
-    //     }
-    //     router.push(newUrl, { scroll: false });
-    // }, [subject]);
+    useEffect(() => {
+        let newUrl = "";
+        if (subject === "all") {
+            newUrl = removeKeysFromUrlQuery({
+                params: searchParams.toString(),
+                keysToRemove: ["subject"],
+            });
+        } else {
+            newUrl = formUrlQuery({
+                params: searchParams.toString(),
+                key: "subject",
+                value: subject,
+            });
+        }
+        router.push(newUrl, { scroll: false });
+    }, [subject]);
 
     return (
         <motion.div

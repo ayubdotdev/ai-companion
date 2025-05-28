@@ -1,12 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import NavItems from '../components/NavItems';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, GraduationCap, LogIn } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navigation = () => {
@@ -29,15 +28,12 @@ const Navigation = () => {
                 <motion.div 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-2.5 cursor-pointer"
+                    className="flex items-center gap-2 md:gap-3 lg:gap-2 cursor-pointer"
                 >
-                    <Image
-                        src="/images/logo.png"
-                        alt="EduNova Logo"
-                        width={46}
-                        height={44}
-                        priority
-                    />
+                    <div className="flex items-center">
+                        <GraduationCap className="w-10 h-10 " />
+                    </div>
+                    <span className="text-xl font-bold text-gray-800 leading-none pt-1">EduNova</span>
                 </motion.div>
             </Link>
 
@@ -53,9 +49,10 @@ const Navigation = () => {
                         <motion.button 
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="btn-signin px-4 py-2 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition"
+                            className="btn-signin bg-white text-blue-600 rounded-md hover:bg-gray-100 transition p-2"
+                            aria-label="Sign In"
                         >
-                            Sign In
+                            <LogIn className="w-6 h-6" />
                         </motion.button>
                     </SignInButton>
                 </SignedOut>
@@ -93,9 +90,10 @@ const Navigation = () => {
                                     <motion.button 
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="btn-signin w-full px-4 py-2 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition"
+                                        className="btn-signin bg-white text-blue-600 rounded-md hover:bg-gray-100 transition w-full p-2 flex items-center justify-center gap-2"
                                     >
-                                        Sign In
+                                        <LogIn className="w-5 h-5" />
+                                        <span>Sign In</span>
                                     </motion.button>
                                 </SignInButton>
                             </SignedOut>

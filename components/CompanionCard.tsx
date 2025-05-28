@@ -92,24 +92,13 @@ const CompanionCard = ({
         <motion.button
           whileHover={{ 
             scale: 1.02,
-            backgroundColor: "#000000",
+            // backgroundColor: "#000000",
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
           }}
           whileTap={{ scale: 0.98 }}
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
-          className="btn-primary w-full justify-center gap-2 bg-black hover:bg-black/90"
+          className="btn-primary w-full justify-center gap-2 bg-blue-400 hover:bg-blue/90"
         >
-          <motion.div
-            whileHover={{ rotate: 360 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-          >
-            {/* <Image 
-              src="/icons/play.svg" 
-              alt="play" 
-              width={16} 
-              height={16}
-            /> */}
-          </motion.div>
           Launch Session
         </motion.button>
       </Link>

@@ -176,7 +176,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                                 lottieRef={lottieRef}
                                 animationData={soundwaves}
                                 autoplay={false}
-                                className="w-full h-full opacity-50"
+                                className="w-full h-full opacity-30"
                             />
                         </motion.div>
 
