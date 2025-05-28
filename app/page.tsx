@@ -1,8 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Brain, Sparkles, Zap, ArrowRight, GraduationCap, BookOpen, Lightbulb } from 'lucide-react';
+import { Brain, Sparkles, Zap, ArrowRight, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
+
+
 
 const features = [
     {
@@ -23,6 +26,11 @@ const features = [
 ];
 
 const Hero = () => {
+    const [isLoading, setIsLoading] = useState(false)
+
+    const handleClick = () => {
+        setIsLoading(true)
+    }
     return (
         <section className="w-full bg-white min-h-screen flex flex-col">
             <div className="max-w-7xl mx-auto flex-1 flex flex-col">
@@ -38,8 +46,8 @@ const Hero = () => {
                             ✨ Learn with EduNova
                         </span>
                     </motion.div>
-                    
-                    <motion.h1 
+
+                    <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7 }}
@@ -56,8 +64,8 @@ const Hero = () => {
                             />
                         </span>
                     </motion.h1>
-                    
-                    <motion.p 
+
+                    <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.2 }}
@@ -91,7 +99,7 @@ const Hero = () => {
                 </div>
 
                 {/* Footer Section */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 0.6 }}
@@ -103,12 +111,13 @@ const Hero = () => {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 className="group bg-black text-white px-8 py-3 rounded-xl text-lg font-medium inline-flex items-center gap-2 hover:bg-black/90 transition-colors"
+                                onClick={handleClick}
                             >
-                                Start Learning
-                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                {isLoading && <Loader2 className='w-5 h-5 animate-spin' />}
+                                <p>{isLoading ? " Starting... " : "Start "}</p>                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </motion.button>
                         </Link>
-                        <motion.p 
+                        <motion.p
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.7, delay: 0.8 }}
