@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 
 interface CompanionCardProps {
   id: string;
@@ -26,29 +27,93 @@ const CompanionCard = ({
   const pathname = usePathname();
 
   return (
-    <article className="companion-card" style={{ backgroundColor: color }}>
-      <div className="flex justify-between items-center">
-        <div className="subject-badge">{subject}</div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ 
+        scale: 1.02,
+        transition: { type: "spring", stiffness: 300, damping: 20 }
+      }}
+      whileTap={{ scale: 0.98 }}
+      className="companion-card flex flex-col gap-4"
+    >
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center gap-4">
+          <motion.div 
+            className="size-[72px] flex items-center justify-center rounded-lg"
+            style={{ backgroundColor: color }}
+            whileHover={{ rotate: 5, scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <Image
+              src={`/icons/${subject}.svg`}
+              alt={subject}
+              width={35}
+              height={35}
+              className="transition-transform duration-300"
+            />
+          </motion.div>
+          <div className="flex flex-col gap-1">
+            <motion.h3 
+              className="text-xl font-bold"
+              whileHover={{ x: 5 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            >
+              {name}
+            </motion.h3>
+            <motion.p 
+              className="text-gray-600"
+              whileHover={{ x: 5 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            >
+              {topic}
+            </motion.p>
+          </div>
+        </div>
+        <div className="flex items-center justify-between">
+          <motion.div 
+            className="subject-badge"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {subject}
+          </motion.div>
+          <motion.div 
+            className="duration-badge"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {duration} min
+          </motion.div>
+        </div>
       </div>
 
-      <h2 className="text-2xl font-bold">{name}</h2>
-      <p className="text-sm">{topic}</p>
-      <div className="flex items-center gap-2">
-        <Image
-          src="/icons/clock.svg"
-          alt="duration"
-          width={13.5}
-          height={13.5}
-        />
-        <p className="text-sm">{duration} minutes</p>
-      </div>
-
-      <Link href={`/companions/${id}`} className="w-full">
-        <button className="bg-black btn-primary w-full justify-center">
-          Launch Lesson
-        </button>
+      <Link href={`/companions/${id}`} className="w-full mt-2">
+        <motion.button
+          whileHover={{ 
+            scale: 1.02,
+            backgroundColor: "#000000",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+          }}
+          whileTap={{ scale: 0.98 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          className="btn-primary w-full justify-center gap-2 bg-black hover:bg-black/90"
+        >
+          <motion.div
+            whileHover={{ rotate: 360 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          >
+            {/* <Image 
+              src="/icons/play.svg" 
+              alt="play" 
+              width={16} 
+              height={16}
+            /> */}
+          </motion.div>
+          Launch Session
+        </motion.button>
       </Link>
-    </article>
+    </motion.div>
   );
 };
 

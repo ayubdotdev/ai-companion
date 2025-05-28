@@ -1,11 +1,13 @@
+import AnimatedHeading from '@/components/AnimatedHeading'
 import { PricingTable } from '@clerk/nextjs'
 import React from 'react'
 
 const subscription = () => {
   return (
-    <div>
+      <AnimatedHeading>
+
         <PricingTable />
-    </div>
+      </AnimatedHeading>
   )
 }
 

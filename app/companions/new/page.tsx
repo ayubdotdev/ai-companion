@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { newCompanionPermissions } from '@/lib/actions/companion.action'
 import Image from 'next/image'
 import Link from 'next/link'
+import AnimatedHeading from '@/components/AnimatedHeading'
 
 
 const NewCompanion = async () => {
@@ -18,7 +19,7 @@ const NewCompanion = async () => {
             {canCreateCompanion ?
                 (
                     <article className='w-full  gap-4 flex flex-col'>
-                        <h1>Companion Builder</h1>
+                        <AnimatedHeading>Companion Builder</AnimatedHeading>
                         <CompanionForm />
                     </article>
                 )

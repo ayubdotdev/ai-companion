@@ -7,6 +7,7 @@ import NavItems from '../components/NavItems';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navigation = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -17,10 +18,19 @@ const Navigation = () => {
     }, [pathname]);
 
     return (
-        <nav className="navbar flex items-center justify-between px-4 py-2 bg-white shadow-md w-full z-50">
+        <motion.nav 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="navbar flex items-center justify-between px-4 py-2 bg-white shadow-md w-full z-50"
+        >
             {/* Logo */}
-            <Link href="/">
-                <div className="flex items-center gap-2.5 cursor-pointer">
+            <Link href="/" className="flex-shrink-0">
+                <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center gap-2.5 cursor-pointer"
+                >
                     <Image
                         src="/images/logo.png"
                         alt="EduNova Logo"
@@ -28,46 +38,77 @@ const Navigation = () => {
                         height={44}
                         priority
                     />
-                </div>
+                </motion.div>
             </Link>
 
-            <div className="hidden md:flex items-center gap-8">
+            {/* Center Navigation */}
+            <div className="hidden md:flex items-center justify-center flex-1">
                 <NavItems />
+            </div>
+
+            {/* Right Side - Auth Buttons */}
+            <div className="hidden md:flex items-center gap-4">
                 <SignedOut>
                     <SignInButton mode="modal">
-                        <button className="btn-signin px-4 py-2 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition">
+                        <motion.button 
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="btn-signin px-4 py-2 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition"
+                        >
                             Sign In
-                        </button>
+                        </motion.button>
                     </SignInButton>
                 </SignedOut>
                 <SignedIn>
-                    <UserButton />
+                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                        <UserButton />
+                    </motion.div>
                 </SignedIn>
             </div>
 
-            <button
+            {/* Mobile Menu Button */}
+            <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="md:hidden p-2"
                 onClick={() => setMenuOpen((prev) => !prev)}
             >
                 {menuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            </motion.button>
 
-            {menuOpen && (
-                <div className="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col items-start gap-4 px-4 py-4 md:hidden z-50">
-                    <NavItems />
-                    <SignedOut>
-                        <SignInButton mode="modal">
-                            <button className="btn-signin px-4 py-2 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition">
-                                Sign In
-                            </button>
-                        </SignInButton>
-                    </SignedOut>
-                    <SignedIn>
-                        <UserButton />
-                    </SignedIn>
-                </div>
-            )}
-        </nav>
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {menuOpen && (
+                    <motion.div 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col items-start gap-4 px-4 py-4 md:hidden z-50"
+                    >
+                        <NavItems onLinkClick={() => setMenuOpen(false)} />
+                        <div className="w-full border-t border-gray-200 pt-4">
+                            <SignedOut>
+                                <SignInButton mode="modal">
+                                    <motion.button 
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="btn-signin w-full px-4 py-2 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition"
+                                    >
+                                        Sign In
+                                    </motion.button>
+                                </SignInButton>
+                            </SignedOut>
+                            <SignedIn>
+                                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                                    <UserButton />
+                                </motion.div>
+                            </SignedIn>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.nav>
     );
 };
 

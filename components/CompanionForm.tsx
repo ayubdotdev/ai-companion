@@ -25,6 +25,7 @@ import { subjects } from "@/constants";
 import { Textarea } from "@/components/ui/textarea";
 import { createCompanion } from "@/lib/actions/companion.action"
 import { redirect } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'Companion is required.' }),
@@ -59,162 +60,336 @@ const CompanionForm = () => {
         }
     }
 
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.2
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 100,
+                damping: 15
+            }
+        }
+    };
+
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Companion name</FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="Enter the companion name"
-                                    {...field}
-                                    className="input"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="subject"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Subject</FormLabel>
-                            <FormControl>
-                                <Select
-                                    onValueChange={field.onChange}
-                                    value={field.value}
-                                    defaultValue={field.value}
-                                >
-                                    <SelectTrigger className="input">
-                                        <SelectValue placeholder="Select a subject" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {subjects.map((subject) => (
-                                            <SelectItem
-                                                value={subject}
-                                                key={subject}
+        <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="w-full max-w-2xl mx-auto"
+        >
+            <Form {...form}>
+                <motion.form 
+                    onSubmit={form.handleSubmit(onSubmit)} 
+                    className="space-y-8"
+                    variants={containerVariants}
+                >
+                    <motion.div variants={itemVariants}>
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Companion name</FormLabel>
+                                    <FormControl>
+                                        <motion.div
+                                            whileHover={{ scale: 1.01 }}
+                                            whileTap={{ scale: 0.99 }}
+                                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                                        >
+                                            <Input
+                                                placeholder="Enter the companion name"
+                                                {...field}
+                                                className="input"
+                                            />
+                                        </motion.div>
+                                    </FormControl>
+                                    <AnimatePresence>
+                                        {form.formState.errors.name && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
                                             >
-                                                {subject}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="topic"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>What should the companion help with?</FormLabel>
-                            <FormControl>
-                                <Textarea
-                                    placeholder="Ex. Derivates & Integrals"
-                                    {...field}
-                                    className="input"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                                                <FormMessage />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </FormItem>
+                            )}
+                        />
+                    </motion.div>
 
-                <FormField
-                    control={form.control}
-                    name="voice"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Voice</FormLabel>
-                            <FormControl>
-                                <Select
-                                    onValueChange={field.onChange}
-                                    value={field.value}
-                                    defaultValue={field.value}
-                                >
-                                    <SelectTrigger className="input">
-                                        <SelectValue
-                                            placeholder="Select the voice"
-                                        />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="male">
-                                            Male
-                                        </SelectItem>
-                                        <SelectItem value="female">
-                                            Female
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="style"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Style</FormLabel>
-                            <FormControl>
-                                <Select
-                                    onValueChange={field.onChange}
-                                    value={field.value}
-                                    defaultValue={field.value}
-                                >
-                                    <SelectTrigger className="input">
-                                        <SelectValue
-                                            placeholder="Select the style"
-                                        />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="formal">
-                                            Formal
-                                        </SelectItem>
-                                        <SelectItem value="casual">
-                                            Casual
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                    <motion.div variants={itemVariants}>
+                        <FormField
+                            control={form.control}
+                            name="subject"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Subject</FormLabel>
+                                    <FormControl>
+                                        <motion.div
+                                            whileHover={{ scale: 1.01 }}
+                                            whileTap={{ scale: 0.99 }}
+                                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                                        >
+                                            <Select
+                                                onValueChange={field.onChange}
+                                                value={field.value}
+                                                defaultValue={field.value}
+                                            >
+                                                <SelectTrigger className="input">
+                                                    <SelectValue placeholder="Select a subject" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {subjects.map((subject, index) => (
+                                                        <motion.div
+                                                            key={subject}
+                                                            initial={{ opacity: 0, x: -20 }}
+                                                            animate={{ opacity: 1, x: 0 }}
+                                                            transition={{ delay: index * 0.05 }}
+                                                        >
+                                                            <SelectItem value={subject}>
+                                                                {subject}
+                                                            </SelectItem>
+                                                        </motion.div>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        </motion.div>
+                                    </FormControl>
+                                    <AnimatePresence>
+                                        {form.formState.errors.subject && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                            >
+                                                <FormMessage />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </FormItem>
+                            )}
+                        />
+                    </motion.div>
 
-                <FormField
-                    control={form.control}
-                    name="duration"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Estimated session duration in minutes</FormLabel>
-                            <FormControl>
-                                <Input
-                                    type="number"
-                                    placeholder="15"
-                                    {...field}
-                                    className="input"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <Button type="submit" className="w-full cursor-pointer bg-black text-white hover:bg-gray-900">
-                    Build Your Companion
-                </Button>
-            </form>
-        </Form>
+                    <motion.div variants={itemVariants}>
+                        <FormField
+                            control={form.control}
+                            name="topic"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>What should the companion help with?</FormLabel>
+                                    <FormControl>
+                                        <motion.div
+                                            whileHover={{ scale: 1.01 }}
+                                            whileTap={{ scale: 0.99 }}
+                                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                                        >
+                                            <Textarea
+                                                placeholder="Ex. Derivates & Integrals"
+                                                {...field}
+                                                className="input min-h-[100px]"
+                                            />
+                                        </motion.div>
+                                    </FormControl>
+                                    <AnimatePresence>
+                                        {form.formState.errors.topic && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                            >
+                                                <FormMessage />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </FormItem>
+                            )}
+                        />
+                    </motion.div>
+
+                    <motion.div variants={itemVariants}>
+                        <FormField
+                            control={form.control}
+                            name="voice"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Voice</FormLabel>
+                                    <FormControl>
+                                        <motion.div
+                                            whileHover={{ scale: 1.01 }}
+                                            whileTap={{ scale: 0.99 }}
+                                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                                        >
+                                            <Select
+                                                onValueChange={field.onChange}
+                                                value={field.value}
+                                                defaultValue={field.value}
+                                            >
+                                                <SelectTrigger className="input">
+                                                    <SelectValue placeholder="Select the voice" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <motion.div
+                                                        initial={{ opacity: 0, y: -10 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        transition={{ delay: 0.1 }}
+                                                    >
+                                                        <SelectItem value="male">Male</SelectItem>
+                                                    </motion.div>
+                                                    <motion.div
+                                                        initial={{ opacity: 0, y: -10 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        transition={{ delay: 0.2 }}
+                                                    >
+                                                        <SelectItem value="female">Female</SelectItem>
+                                                    </motion.div>
+                                                </SelectContent>
+                                            </Select>
+                                        </motion.div>
+                                    </FormControl>
+                                    <AnimatePresence>
+                                        {form.formState.errors.voice && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                            >
+                                                <FormMessage />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </FormItem>
+                            )}
+                        />
+                    </motion.div>
+
+                    <motion.div variants={itemVariants}>
+                        <FormField
+                            control={form.control}
+                            name="style"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Style</FormLabel>
+                                    <FormControl>
+                                        <motion.div
+                                            whileHover={{ scale: 1.01 }}
+                                            whileTap={{ scale: 0.99 }}
+                                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                                        >
+                                            <Select
+                                                onValueChange={field.onChange}
+                                                value={field.value}
+                                                defaultValue={field.value}
+                                            >
+                                                <SelectTrigger className="input">
+                                                    <SelectValue placeholder="Select the style" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <motion.div
+                                                        initial={{ opacity: 0, y: -10 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        transition={{ delay: 0.1 }}
+                                                    >
+                                                        <SelectItem value="formal">Formal</SelectItem>
+                                                    </motion.div>
+                                                    <motion.div
+                                                        initial={{ opacity: 0, y: -10 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        transition={{ delay: 0.2 }}
+                                                    >
+                                                        <SelectItem value="casual">Casual</SelectItem>
+                                                    </motion.div>
+                                                </SelectContent>
+                                            </Select>
+                                        </motion.div>
+                                    </FormControl>
+                                    <AnimatePresence>
+                                        {form.formState.errors.style && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                            >
+                                                <FormMessage />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </FormItem>
+                            )}
+                        />
+                    </motion.div>
+
+                    <motion.div variants={itemVariants}>
+                        <FormField
+                            control={form.control}
+                            name="duration"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Estimated session duration in minutes</FormLabel>
+                                    <FormControl>
+                                        <motion.div
+                                            whileHover={{ scale: 1.01 }}
+                                            whileTap={{ scale: 0.99 }}
+                                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                                        >
+                                            <Input
+                                                type="number"
+                                                placeholder="15"
+                                                {...field}
+                                                className="input"
+                                            />
+                                        </motion.div>
+                                    </FormControl>
+                                    <AnimatePresence>
+                                        {form.formState.errors.duration && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                            >
+                                                <FormMessage />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </FormItem>
+                            )}
+                        />
+                    </motion.div>
+
+                    <motion.div variants={itemVariants}>
+                        <motion.div
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                        >
+                            <Button 
+                                type="submit" 
+                                className="w-full cursor-pointer bg-black text-white hover:bg-gray-900"
+                            >
+                                Build Your Companion
+                            </Button>
+                        </motion.div>
+                    </motion.div>
+                </motion.form>
+            </Form>
+        </motion.div>
     )
 }
 
-export default CompanionForm
+export default CompanionForm;
