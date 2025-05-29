@@ -13,6 +13,9 @@ import {
 import Image from "next/image";
 import CompanionsList from "@/components/CompanionsList";
 import AnimatedHeading from "@/components/AnimatedHeading";
+import { getTotalSessionDuration } from "@/lib/actions/companion.action";
+
+export const dynamic = 'force-dynamic';
 
 const Profile = async () => {
   const user = await currentUser();
@@ -21,6 +24,7 @@ const Profile = async () => {
 
   const companions = await getUserCompanions(user.id);
   const sessionHistory = await getUserSessions(user.id);
+  const totalDuration = await getTotalSessionDuration(user.id);
 
   return (
     <AnimatedHeading>
@@ -88,32 +92,44 @@ const Profile = async () => {
         </section>
 
         <div className="mt-8 rounded-2xl border border-gray-200 shadow-md bg-white overflow-hidden">
-  <Accordion type="multiple">
-    <AccordionItem value="recent">
-      <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline">
-        Recent Sessions
-      </AccordionTrigger>
-      <AccordionContent className="bg-gray-50 px-6 py-4">
-        <CompanionsList
-          title="Recent Sessions"
-          companions={sessionHistory}
-        />
-      </AccordionContent>
-    </AccordionItem>
+          <Accordion type="multiple">
 
-    <AccordionItem value="companions"  className="border-none">
-      <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline">
-        My Companions ({companions.length})
-      </AccordionTrigger>
-      <AccordionContent className="bg-gray-50 px-6 py-4">
-        <CompanionsList
-          title="My Companions"
-          companions={companions}
-        />
-      </AccordionContent>
-    </AccordionItem>
-  </Accordion>
-</div>
+
+            <AccordionItem value="recent">
+              <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline">
+                Recent Sessions
+              </AccordionTrigger>
+              <AccordionContent className="bg-gray-50 px-6 py-4">
+                <CompanionsList
+                  title="Recent Sessions"
+                  companions={sessionHistory}
+                />
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="companions">
+              <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline">
+                My Companions ({companions.length})
+              </AccordionTrigger>
+              <AccordionContent className="bg-gray-50 px-6 py-4">
+                <CompanionsList
+                  title="My Companions"
+                  companions={companions}
+                />
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="total-duration" className="border-none">
+              <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline">
+                Total Minutes Spent
+              </AccordionTrigger>
+              <AccordionContent className="bg-gray-50 px-6 py-4">
+                <p className="text-lg text-gray-700">
+                  You have spent <span className="font-bold text-gray-900">{totalDuration}</span> minutes in sessions.
+                </p>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
 
       </main>
     </AnimatedHeading>

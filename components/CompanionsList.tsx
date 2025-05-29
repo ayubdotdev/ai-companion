@@ -1,19 +1,10 @@
 "use client";
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import {cn, getSubjectColor} from "@/lib/utils";
+import { cn, getSubjectColor } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 interface CompanionsListProps {
   title: string;
@@ -33,7 +24,7 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
     }
   };
 
-  const rowVariants = {
+  const cardVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -51,118 +42,84 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className={cn("w-full", classNames)}
+      className={cn("w-full space-y-8 px-4  md:px-6 bg-rose-50	lg:px-8", classNames)}
     >
       <motion.h2 
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-2xl font-bold mb-6"
+        className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
       >
         {title}
       </motion.h2>
 
-      <Table>
-        <TableCaption>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="text-gray-500"
-          >
-            {companions?.length === 0 ? "No companions found" : "List of available companions"}
-          </motion.p>
-        </TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Companion</TableHead>
-            <TableHead>Subject</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
+      {companions?.length === 0 ? (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="text-gray-500 text-center py-8"
+        >
+          No companions found
+        </motion.p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-6 pb-8">
           <AnimatePresence>
             {companions?.map(({id, subject, name, topic, duration}, index) => (
-              <motion.tr
+              <motion.div
                 key={`${id}-${index}`}
-                variants={rowVariants}
+                variants={cardVariants}
                 initial="hidden"
                 animate="visible"
-                exit={{ opacity: 0, x: -20 }}
+                exit={{ opacity: 0, scale: 0.9 }}
                 whileHover={{ 
-                  backgroundColor: "rgba(0, 0, 0, 0.02)",
+                  y: -5,
                   transition: { duration: 0.2 }
                 }}
-                className="group"
+                className="group relative"
               >
-                <TableCell>
-                  <Link href={`/companions/${id}`}>
-                    <motion.div 
-                      className="flex items-center gap-2"
-                      whileHover={{ x: 5 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                    >
-                      <motion.div 
-                        className="size-[72px] flex items-center justify-center rounded-lg max-md:hidden"
-                        style={{ backgroundColor: getSubjectColor(subject) }}
-                        whileHover={{ 
-                          rotate: 5, 
-                          scale: 1.1,
-                          transition: { type: "spring", stiffness: 400, damping: 10 }
-                        }}
-                      >
-                        <Image
-                          src={`/icons/${subject}.svg`}
-                          alt={subject}
-                          width={35}
-                          height={35}
-                          className="transition-transform duration-300"
-                        />
-                      </motion.div>
-                      <div className="flex flex-col gap-2">
-                        <motion.p 
-                          className="font-bold text-2xl group-hover:text-blue-600 transition-colors"
-                          whileHover={{ x: 5 }}
+                <Link href={`/companions/${id}`}>
+                  <div className="relative h-full bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-300">
+                    
+                    <div className="p-6 space-y-4">
+                      <div className="flex items-center gap-2">
+                        <motion.div 
+                          className="size-10 flex items-center justify-center rounded-lg"
+                          style={{ backgroundColor: getSubjectColor(subject) }}
+                          whileHover={{ rotate: 5, scale: 1.1 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 10 }}
                         >
-                          {name}
-                        </motion.p>
-                        <motion.p 
-                          className="text-lg text-gray-600"
-                          whileHover={{ x: 5 }}
-                        >
-                          {topic}
-                        </motion.p>
+                          <Image
+                            src={`/icons/${subject}.svg`}
+                            alt={subject}
+                            width={20}
+                            height={20}
+                            className="transition-transform duration-300"
+                          />
+                        </motion.div>
+                        <span className="text-sm font-medium text-gray-600">{subject}</span>
                       </div>
-                      <ArrowUpRight className="w-6 h-6 ml-auto text-gray-400 group-hover:text-blue-600 transition-colors" />
-                    </motion.div>
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  <motion.div 
-                    className="subject-badge w-fit max-md:hidden"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {subject}
-                  </motion.div>
-                  <motion.div 
-                    className="flex items-center justify-center rounded-lg w-fit p-2 md:hidden"
-                    style={{ backgroundColor: getSubjectColor(subject) }}
-                    whileHover={{ rotate: 5, scale: 1.1 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    <Image
-                      src={`/icons/${subject}.svg`}
-                      alt={subject}
-                      width={18}
-                      height={18}
-                    />
-                  </motion.div>
-                </TableCell>
-              </motion.tr>
+
+                      <div className="space-y-2">
+                        <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                          {name}
+                        </h3>
+                        <p className="text-gray-600 line-clamp-2">
+                          {topic}
+                        </p>
+                      </div>
+
+                      <div className="absolute bottom-4 right-4">
+                        <ArrowUpRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </AnimatePresence>
-        </TableBody>
-      </Table>
+        </div>
+      )}
     </motion.div>
   )
 }

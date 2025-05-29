@@ -24,7 +24,7 @@ const CompanionCard = ({
   subject,
   duration,
   color,
-  bookmarked,
+  
 }: CompanionCardProps) => {
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
@@ -42,7 +42,7 @@ const CompanionCard = ({
         transition: { type: "spring", stiffness: 300, damping: 20 }
       }}
       whileTap={{ scale: 0.98 }}
-      className="companion-card flex flex-col gap-4"
+      className="companion-card bg-emerald-50	 flex flex-col gap-4"
     >
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-4">

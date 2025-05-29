@@ -107,6 +107,25 @@ export const getUserCompanions = async (userId: string) => {
     return data;
 }
 
+export const getTotalSessionDuration = async (userId: string): Promise<number> => {
+    const supabase = createSupabaseClient();
+    const { data, error } = await supabase
+        .from('session_history')
+        .select('companions:companion_id (duration)')
+        .eq('user_id', userId);
+
+    if (error) {
+        console.error("Error fetching session history for total duration:", error.message);
+        throw new Error(error.message);
+    }
+
+    const totalDuration = data.reduce((sum, session: any) => {
+        return sum + (session.companions?.[0]?.duration || 0);
+    }, 0);
+
+    return totalDuration;
+};
+
 export const newCompanionPermissions = async () => {
     const { userId, has } = await auth();
     const supabase = createSupabaseClient();

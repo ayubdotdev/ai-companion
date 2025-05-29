@@ -43,7 +43,7 @@ const Cta = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="cta-section"
+            className="cta-section "
         >
             <motion.div 
                 variants={itemVariants}
@@ -61,7 +61,7 @@ const Cta = () => {
             
             <motion.p 
                 variants={itemVariants}
-                className="text-gray-600"
+                className="text-gray-200"
             >
                 Pick a name, subject, voice, & personality — and start learning through voice conversations that feel natural and fun.
             </motion.p>
