@@ -90,7 +90,7 @@ const Profile = async () => {
         <div className="mt-8 rounded-2xl border border-gray-200 shadow-md bg-white overflow-hidden">
   <Accordion type="multiple">
     <AccordionItem value="recent">
-      <AccordionTrigger className="text-2xl font-bold px-6 py-4">
+      <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline">
         Recent Sessions
       </AccordionTrigger>
       <AccordionContent className="bg-gray-50 px-6 py-4">
@@ -101,8 +101,8 @@ const Profile = async () => {
       </AccordionContent>
     </AccordionItem>
 
-    <AccordionItem value="companions">
-      <AccordionTrigger className="text-2xl font-bold px-6 py-4 border-t border-gray-200">
+    <AccordionItem value="companions"  className="border-none">
+      <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline">
         My Companions ({companions.length})
       </AccordionTrigger>
       <AccordionContent className="bg-gray-50 px-6 py-4">

@@ -5,7 +5,6 @@ import { cn, configureAssistant, getSubjectColor } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import Image from "next/image";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
-import soundwaves from '@/constants/soundwaves.json'
 import { motion, AnimatePresence } from "framer-motion";
 import { addToSessionHistory } from "@/lib/actions/companion.action";
 
@@ -161,26 +160,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                         whileHover={{ scale: 1.05 }}
                         transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
-                        {/* Soundwaves animation in the background */}
-                        <motion.div 
-                            className={cn(
-                                'absolute inset-0 flex items-center justify-center',
-                                callStatus === CallStatus.ACTIVE && isSpeaking ? 'opacity-100' : 'opacity-0'
-                            )}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            transition={{ duration: 0.3 }}
-                            style={{ zIndex: 1 }}
-                        >
-                            <Lottie
-                                lottieRef={lottieRef}
-                                animationData={soundwaves}
-                                autoplay={false}
-                                className="w-full h-full opacity-30"
-                            />
-                        </motion.div>
-
+                       
                         {/* AI Avatar on top */}
                         <motion.div
                             key={callStatus}

@@ -13,6 +13,7 @@ import {cn, getSubjectColor} from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 interface CompanionsListProps {
   title: string;
@@ -82,7 +83,7 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
           <AnimatePresence>
             {companions?.map(({id, subject, name, topic, duration}, index) => (
               <motion.tr
-                key={id}
+                key={`${id}-${index}`}
                 variants={rowVariants}
                 initial="hidden"
                 animate="visible"
@@ -131,6 +132,7 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
                           {topic}
                         </motion.p>
                       </div>
+                      <ArrowUpRight className="w-6 h-6 ml-auto text-gray-400 group-hover:text-blue-600 transition-colors" />
                     </motion.div>
                   </Link>
                 </TableCell>

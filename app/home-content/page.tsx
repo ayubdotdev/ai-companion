@@ -26,9 +26,9 @@ const Page = async () => {
 
       <section className="home-section">
         <CompanionsList
-          title="Recently completed sessions"
+          title="Recently completed sessions by our users"
           companions={recentSessionsCompanions}
-          classNames="w-2/3 max-lg:w-full"
+          classNames="w-2/3 max-lg:w-full border border-grey-200 rounded-lg"
         />
         <CTA />
       </section>

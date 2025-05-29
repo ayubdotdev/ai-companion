@@ -12,6 +12,11 @@ const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
 
     const companions = await getAllCompanions({ subject, topic });
 
+    // Filter out duplicate companions based on ID
+    const uniqueCompanions = companions.filter((companion, index, self) =>
+        index === self.findIndex((c) => c.id === companion.id)
+    );
+
     return (
         <main>
 
@@ -23,7 +28,7 @@ const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
                     </div>
             </section>
             <section className="companions-grid">
-                {companions.map((companion) => (
+                {uniqueCompanions.map((companion) => (
                     <CompanionCard
                         key={companion.id}
                         {...companion}

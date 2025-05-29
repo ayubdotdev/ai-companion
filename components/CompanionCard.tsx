@@ -103,7 +103,7 @@ const CompanionCard = ({
           }}
           whileTap={{ scale: 0.98 }}
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
-          className="btn-primary w-full justify-center gap-2 bg-black hover:bg-black/90 flex items-center"
+          className={`btn-primary w-full justify-center gap-2 bg-black hover:bg-black/90 flex items-center ${isLoading ? 'animate-pulse' : ''}`}
           disabled={isLoading}
         >
           {isLoading && <Loader2 className="w-5 h-5 animate-spin" />}
