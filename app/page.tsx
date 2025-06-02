@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Brain, Sparkles, Zap, ArrowRight, Loader2 } from 'lucide-react';
+import { Brain, Sparkles, Zap, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -117,8 +117,7 @@ const Hero = () => {
                                 onClick={handleClick}
                             >
                                 {isLoading && <Loader2 className='w-5 h-5 animate-spin' />}
-                                <p>{isLoading ? " Starting... " : "Start "}</p>
-                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                <p>{isLoading ? " Starting... " : "Get Started "}</p>
                             </motion.button>
                         </Link>
                         <motion.p

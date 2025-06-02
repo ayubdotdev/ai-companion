@@ -163,7 +163,7 @@ body {
 }
 
   .subject-badge {
-    @apply bg-black text-white rounded-[2rem] text-sm px-3 py-1.5 capitalize font-medium;
+    @apply bg-slate-900	 text-white rounded-[2rem] text-sm px-3 py-1.5 capitalize font-medium;
   }
   .companion-bookmark {
     @apply px-3 py-1.5 bg-black rounded-[2rem] flex items-center h-full aspect-square cursor-pointer;

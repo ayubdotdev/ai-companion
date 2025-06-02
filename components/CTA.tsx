@@ -15,6 +15,7 @@ const Cta = () => {
 
     const containerVariants = {
         hidden: { opacity: 0 },
+
         visible: {
             opacity: 1,
             transition: {
@@ -89,7 +90,7 @@ const Cta = () => {
                 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="btn-primary group"
+                className="btn-primary group border border-grey-400 rounded-lg"
             >
                 <motion.div
                     whileHover={{ rotate: 90 }}

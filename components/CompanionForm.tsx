@@ -26,6 +26,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { createCompanion } from "@/lib/actions/companion.action"
 import { redirect } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useState } from "react"
+import { Loader2 } from "lucide-react"
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'Companion is required.' }),
@@ -37,6 +40,8 @@ const formSchema = z.object({
 })
 
 const CompanionForm = () => {
+    
+    const [isLoading, setIsLoading] = useState(false);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -83,6 +88,9 @@ const CompanionForm = () => {
             }
         }
     };
+    const onClick = () => {
+        setIsLoading(true)
+    }
 
     return (
         <motion.div
@@ -92,8 +100,8 @@ const CompanionForm = () => {
             className="w-full max-w-2xl mx-auto"
         >
             <Form {...form}>
-                <motion.form 
-                    onSubmit={form.handleSubmit(onSubmit)} 
+                <motion.form
+                    onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-8"
                     variants={containerVariants}
                 >
@@ -378,12 +386,19 @@ const CompanionForm = () => {
                             whileTap={{ scale: 0.98 }}
                             transition={{ type: "spring", stiffness: 400, damping: 17 }}
                         >
-                            <Button 
-                                type="submit" 
-                                className="w-full cursor-pointer bg-black text-white hover:bg-gray-900"
+                            <motion.button
+                                whileHover={{
+                                    scale: 1.02,
+                                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+                                }}
+                                whileTap={{ scale: 0.98 }}
+                                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                                className={`btn-primary w-full justify-center gap-2 bg-black hover:bg-black/90 flex items-center ${isLoading ? 'animate-pulse' : ''}`}
+                                disabled={isLoading}
                             >
-                                Build Your Companion
-                            </Button>
+                                {isLoading && <Loader2 className="w-5 h-5 animate-spin" />}
+                                {isLoading ? "Building..." : "Build Your Companion"}
+                            </motion.button>
                         </motion.div>
                     </motion.div>
                 </motion.form>

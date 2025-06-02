@@ -3,6 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import { ClerkProvider } from "@clerk/nextjs";
+import StaticBackgroundParticles from "@/components/particles";
+
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,9 +27,11 @@ export default function RootLayout({
       <body className={`${poppins.variable} font-sans antialiased`}>
         <ClerkProvider appearance={{ variables:{colorPrimary:'#fe5933'}}}>
           <Navigation />
-          {children}
+            {children}
         </ClerkProvider>
       </body>
     </html>
   );
 }
+
+

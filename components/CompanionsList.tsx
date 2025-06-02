@@ -4,7 +4,8 @@ import { cn, getSubjectColor } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Loader2 } from "lucide-react";
+import { useState } from "react";
 
 interface CompanionsListProps {
   title: string;
@@ -13,6 +14,12 @@ interface CompanionsListProps {
 }
 
 const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) => {
+  const [loadingStates, setLoadingStates] = useState<{ [key: string]: boolean }>({});
+
+  const handleClick = (id: string) => {
+    setLoadingStates(prev => ({ ...prev, [id]: true }));
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -73,48 +80,78 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
                 animate="visible"
                 exit={{ opacity: 0, scale: 0.9 }}
                 whileHover={{ 
-                  y: -5,
-                  transition: { duration: 0.2 }
+                  scale: 1.02,
+                  transition: { type: "spring", stiffness: 300, damping: 20 }
                 }}
-                className="group relative"
+                whileTap={{ scale: 0.98 }}
+                className="companion-card bg-emerald-50 flex flex-col gap-4"
               >
-                <Link href={`/companions/${id}`}>
-                  <div className="relative h-full bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-300">
-                    
-                    <div className="p-6 space-y-4">
-                      <div className="flex items-center gap-2">
-                        <motion.div 
-                          className="size-10 flex items-center justify-center rounded-lg"
-                          style={{ backgroundColor: getSubjectColor(subject) }}
-                          whileHover={{ rotate: 5, scale: 1.1 }}
-                          transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                        >
-                          <Image
-                            src={`/icons/${subject}.svg`}
-                            alt={subject}
-                            width={20}
-                            height={20}
-                            className="transition-transform duration-300"
-                          />
-                        </motion.div>
-                        <span className="text-sm font-medium text-gray-600">{subject}</span>
-                      </div>
-
-                      <div className="space-y-2">
-                        <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                          {name}
-                        </h3>
-                        <p className="text-gray-600 line-clamp-2">
-                          {topic}
-                        </p>
-                      </div>
-
-                      <div className="absolute bottom-4 right-4">
-                        <ArrowUpRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
-                      </div>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-4">
+                    <motion.div 
+                      className="size-[42px] flex items-center justify-center rounded-lg"
+                      style={{ backgroundColor: getSubjectColor(subject) }}
+                      whileHover={{ rotate: 5, scale: 1.1 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      <Image
+                        src={`/icons/${subject}.svg`}
+                        alt={subject}
+                        width={35}
+                        height={35}
+                        className="transition-transform duration-300"
+                      />
+                    </motion.div>
+                    <div className="flex flex-col gap-1">
+                      <motion.h3 
+                        className=" font-bold"
+                        whileHover={{ x: 5 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      >
+                        {name}
+                      </motion.h3>
+                      <motion.p 
+                        className="text-gray-600"
+                        whileHover={{ x: 5 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      >
+                        {topic}
+                      </motion.p>
                     </div>
                   </div>
-                </Link>
+                  <div className="flex items-center justify-between">
+                    <motion.div 
+                      className=" bg-black/90		subject-badge"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {subject}
+                    </motion.div>
+                    <motion.div 
+                      className="duration-badge"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {duration} min
+                    </motion.div>
+                  </div>
+
+                  <Link href={`/companions/${id}`} className="w-full mt-2" onClick={() => handleClick(id)}>
+                    <motion.button
+                      whileHover={{ 
+                        scale: 1.02,
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+                      }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                      className={`btn-primary w-full justify-center gap-2 bg-black hover:bg-black/90 flex items-center ${loadingStates[id] ? 'animate-pulse' : ''}`}
+                      disabled={loadingStates[id]}
+                    >
+                      {loadingStates[id] && <Loader2 className="w-5 h-5 animate-spin" />}
+                      {loadingStates[id] ? "Launching..." : "Launch Session"}
+                    </motion.button>
+                  </Link>
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>
