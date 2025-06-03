@@ -14,31 +14,34 @@ const Page = async () => {
 
   return (
     <main className="relative">
-      <div className="hidden lg:block absolute top-[-4%] left-[18%] w-[200px] h-[200px] opacity-40 -z-10">
-        <Image
-          src='/images/masters.jpg'
-          alt='masters'
-          width={200}
-          height={200}
-          className="object-cover rounded-lg"
-        />
-      </div>
+      <AnimatedHeading>
 
-      <div className="hidden lg:block absolute top-[-2%] right-[18%] w-[200] h-[200] opacity-40 -z-10">
-        <Image
-          src='/images/ai.jpg'
-          alt='ai'
-          width={200}
-          height={200}
-          className="object-cover rounded-lg"
-        />
-      </div>
+        <div className="hidden lg:block absolute top-[5%] left-[18%] w-[300px] h-[300px] opacity-60 -z-10">
+          <Image
+            src='/images/masters.jpg'
+            alt='masters'
+            width={200}
+            height={200}
+            className="object-cover rounded-lg"
+          />
+        </div>
+
+        <div className="hidden lg:block absolute top-[6%] right-[18%] w-[300] h-[300] opacity-60 -z-10">
+          <Image
+            src='/images/ai.jpg'
+            alt='ai'
+            width={200}
+            height={200}
+            className="object-cover rounded-lg"
+          />
+        </div>
+      </AnimatedHeading>
 
       <div className="relative z-10">
         <AnimatedHeading>
 
-            Popular Companions
-          
+          Popular Companions
+
         </AnimatedHeading>
         <section className="home-section">
           {companions.map((companion) => (
