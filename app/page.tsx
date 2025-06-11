@@ -46,7 +46,7 @@ const Hero = () => {
                         transition={{ duration: 0.5 }}
                         className="inline-block mb-6"
                     >
-                        <span className="bg-blue-100/80 backdrop-blur-sm text-blue-600 px-4 py-1.5 rounded-full text-sm font-medium border border-blue-200/50">
+                        <span className="bg-blue-100/80 dark:bg-blue-900/20 backdrop-blur-sm text-blue-600 dark:text-blue-400 px-4 py-1.5 rounded-full text-sm font-medium border border-blue-200/50 dark:border-blue-800/30">
                             ✨ Learn with EduNova
                         </span>
                     </motion.div>
@@ -55,13 +55,13 @@ const Hero = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7 }}
-                        className="text-4xl md:text-6xl font-bold mb-6 text-gray-900 leading-tight"
+                        className="text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-gray-100 leading-tight"
                     >
                         Learn Smarter,{" "}
                         <span className="relative inline-block">
                             Not Harder
                             <motion.span
-                                className="absolute -bottom-2 left-0 w-full h-3 bg-gradient-to-r from-blue-300 to-purple-300 rounded-lg -rotate-1"
+                                className="absolute mt-2  -bottom-2 left-0 w-full h-2 bg-gradient-to-r from-blue-300 to-purple-300 dark:from-blue-500 dark:to-purple-500 rounded-lg -rotate-1"
                                 initial={{ scaleX: 0 }}
                                 animate={{ scaleX: 1 }}
                                 transition={{ delay: 0.5, duration: 0.5 }}
@@ -73,7 +73,7 @@ const Hero = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.2 }}
-                        className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed"
+                        className="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed"
                     >
                         Tired of boring lectures? Meet your new study buddy - an AI companion that makes learning feel like talking with a friend who actually gets it! 🎓
                     </motion.p>
@@ -87,15 +87,16 @@ const Hero = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                            className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/80"
+                            className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 dark:border-gray-700/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/80 dark:hover:bg-gray-800/80"
                         >
-                            <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center mb-4">
-                                <feature.icon className="w-6 h-6 text-blue-600" />
+                            <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-600/20 dark:to-purple-600/20 dark:via-indigo-600/20 rounded-xl flex items-center justify-center mb-4 relative overflow-hidden">
+                                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-purple-400/20 dark:from-blue-400/30 dark:to-purple-400/30 rounded-xl"></div>
+                                <feature.icon className="w-6 h-6 text-blue-600 dark:text-blue-400 relative z-10" />
                             </div>
-                            <h3 className="text-xl font-semibold mb-2 text-gray-900">
+                            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
                                 {feature.title}
                             </h3>
-                            <p className="text-gray-600 leading-relaxed text-sm">
+                            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
                                 {feature.description}
                             </p>
                         </motion.div>
@@ -113,7 +114,7 @@ const Hero = () => {
                             <motion.button
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className={`group bg-black text-white px-8 py-3 rounded-xl text-lg font-medium inline-flex items-center gap-2 hover:bg-black/90 transition-colors ${isLoading ? 'animate-pulse' : ''}`}
+                                className={`group bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-8 py-3 rounded-xl text-lg font-medium inline-flex items-center gap-2 hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors ${isLoading ? 'animate-pulse' : ''}`}
                                 onClick={handleClick}
                             >
                                 {isLoading && <Loader2 className='w-5 h-5 animate-spin' />}
@@ -124,7 +125,7 @@ const Hero = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.7, delay: 0.8 }}
-                            className="mt-6 text-gray-600 text-sm"
+                            className="mt-6 text-gray-600 dark:text-gray-400 text-sm"
                         >
                             Join today and learn with EduNova 🚀
                         </motion.p>

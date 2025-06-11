@@ -62,7 +62,7 @@ const CompanionCard = ({
           </motion.div>
           <div className="flex flex-col gap-1">
             <motion.h3 
-              className="text-xl font-bold"
+              className="text-xl dark:text-black font-bold"
               whileHover={{ x: 5 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
             >

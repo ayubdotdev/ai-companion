@@ -41,7 +41,7 @@ const Profile = async () => {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <h1 className="font-bold text-2xl">
+              <h1 className="font-bold text-2xl text-gray-900 dark:text-gray-100">
                 {user.firstName} {user.lastName}
               </h1>
               <p className="text-sm text-muted-foreground">
@@ -51,7 +51,7 @@ const Profile = async () => {
           </div>
 
           <div className="flex gap-4 max-sm:w-full">
-            <div className="border border-black rounded-lg p-3 gap-2 flex flex-col h-fit flex-1">
+            <div className="border border-gray-300 dark:border-gray-600 rounded-lg p-3 gap-2 flex flex-col h-fit flex-1 bg-white dark:bg-gray-800">
               <div className="flex gap-2 items-center">
                 <div>
                   <Image
@@ -61,16 +61,16 @@ const Profile = async () => {
                     height={22}
                   />
                 </div>
-                <p className="text-2xl font-bold">
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {sessionHistory.length}
                 </p>
               </div>
-              <div className="text-lg text-gray-600">
+              <div className="text-lg text-gray-600 dark:text-gray-400">
                 Lessons completed
               </div>
             </div>
 
-            <div className="border border-black rounded-lg p-3 gap-2 flex flex-col h-fit flex-1">
+            <div className="border border-gray-300 dark:border-gray-600 rounded-lg p-3 gap-2 flex flex-col h-fit flex-1 bg-white dark:bg-gray-800">
               <div className="flex gap-2 items-center">
                 <div>
                   <Image
@@ -80,54 +80,54 @@ const Profile = async () => {
                     height={22}
                   />
                 </div>
-                <p className="text-2xl font-bold">
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {companions.length}
                 </p>
               </div>
-              <div className="text-lg text-gray-600">
+              <div className="text-lg text-gray-600 dark:text-gray-400">
                 Companions created
               </div>
             </div>
           </div>
         </section>
 
-        <div className="mt-8 rounded-2xl border border-gray-200 shadow-md bg-white overflow-hidden">
+        <div className="mt-8 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-md bg-white dark:bg-gray-800 overflow-hidden">
           <Accordion type="multiple">
 
 
             <AccordionItem value="recent">
-              <AccordionTrigger className="text-2xl font-bold px-6 py-4  hover:no-underline ">
+              <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline text-gray-900 dark:text-gray-100">
                 Recent Sessions
               </AccordionTrigger>
-              <AccordionContent className="bg-gray-50  px-6 py-4">
+              <AccordionContent className="bg-gray-50 dark:bg-gray-900 px-6 py-4">
                 <CompanionsList
-                  title="Recent Sessions"
+                  title=""
                   companions={sessionHistory}
-                  classNames="bg-gray-50"
+                  classNames="bg-gray-50 dark:bg-gray-900"
                 />
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="companions">
-              <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline">
+              <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline text-black dark:text-gray-100">
                 My Companions ({companions.length})
               </AccordionTrigger>
-              <AccordionContent className="bg-gray-50 px-6 py-4">
+              <AccordionContent className="bg-gray-50 dark:bg-gray-900 px-6 py-4">
                 <CompanionsList
-                  title="My Companions"
+                  title=""
                   companions={companions}
-                  classNames="bg-gray-50"
+                  classNames="bg-gray-50 dark:bg-gray-900"
 
                 />
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="total-duration" className="border-none">
-              <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline">
+              <AccordionTrigger className="text-2xl font-bold px-6 py-4 hover:no-underline text-gray-900 dark:text-gray-100">
                 Total Minutes Spent
               </AccordionTrigger>
-              <AccordionContent className="bg-gray-50 px-6 py-4">
-                <p className="text-lg text-gray-700">
-                  You have spent <span className="font-bold text-gray-900">{totalDuration}</span> minutes in sessions.
+              <AccordionContent className="bg-gray-50 dark:bg-gray-900 px-6 py-4">
+                <p className="text-lg text-gray-700 dark:text-gray-300">
+                  You have spent <span className="font-bold text-gray-900 dark:text-gray-100">{totalDuration}</span> minutes in sessions.
                 </p>
               </AccordionContent>
             </AccordionItem>

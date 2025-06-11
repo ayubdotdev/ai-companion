@@ -55,8 +55,8 @@ const Page = async () => {
 
         <AnimatedHeading>
           <div className="text-center mb-8 mt-12">
-            <h2 className="text-3xl font-bold text-gray-700 mb-2">Explore More Companions</h2>
-            <p className="text-lg text-gray-500">Discover AI companions created by the community or create your own!</p>
+            <h2 className="text-3xl font-bold text-gray-700 dark:text-gray-300 mb-2">Explore More Companions</h2>
+            <p className="text-lg text-gray-500 dark:text-gray-400">Discover AI companions created by the community or create your own!</p>
           </div>
         </AnimatedHeading>
 
@@ -64,7 +64,7 @@ const Page = async () => {
           <CompanionsList
             title="Companions of Community"
             companions={communityCompanions}
-            classNames="w-2/3 pt-5 max-lg:w-full  text-center border border-grey-400 rounded-lg"
+            classNames="w-2/3 pt-5 max-lg:w-full text-center border border-gray-300 dark:border-gray-600 rounded-lg"
           />
           <CTA />
         </section>

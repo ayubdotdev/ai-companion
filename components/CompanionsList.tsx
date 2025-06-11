@@ -104,7 +104,7 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
                     </motion.div>
                     <div className="flex flex-col gap-1">
                       <motion.h3 
-                        className=" font-bold"
+                        className=" dark:text-black   font-bold"
                         whileHover={{ x: 5 }}
                         transition={{ type: "spring", stiffness: 400, damping: 25 }}
                       >

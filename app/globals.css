@@ -169,7 +169,7 @@ body {
     @apply px-3 py-1.5 bg-black rounded-[2rem] flex items-center h-full aspect-square cursor-pointer;
   }
   .input {
-    @apply !border-black !bg-white focus-visible:!ring-0 focus-visible:!border-black !w-full font-medium;
+    @apply !border-gray-300 dark:!border-gray-600 !bg-white dark:!bg-gray-800 focus-visible:!ring-0 focus-visible:!border-gray-400 dark:focus-visible:!border-gray-500 !w-full font-medium text-gray-900 dark:text-gray-100;
   }
   .rounded-border {
     @apply rounded-[2rem] border border-black;

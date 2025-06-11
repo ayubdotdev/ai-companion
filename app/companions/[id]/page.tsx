@@ -1,5 +1,3 @@
-
-
 import {getCompanion} from "@/lib/actions/companion.action";
 import {currentUser} from "@clerk/nextjs/server";
 import {redirect} from "next/navigation";
@@ -26,7 +24,7 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
     return (
           <main>
             <AnimatedHeading>
-            <article className="flex rounded-border justify-between p-6 max-md:flex-col">
+            <article className="flex rounded-border justify-between p-6 max-md:flex-col bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
                 <div className="flex items-center gap-2">
                     <div className="size-[72px] flex items-center justify-center rounded-lg max-md:hidden" style={{ backgroundColor: getSubjectColor(subject)}}>
                         <Image src={`/icons/${subject}.svg`} alt={subject} width={35} height={35} />
@@ -34,17 +32,17 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
 
                     <div className="flex flex-col gap-2">
                         <div className="flex items-center gap-2">
-                            <p className="font-bold text-2xl">
+                            <p className="font-bold text-2xl text-gray-900 dark:text-gray-100">
                                 {name}
                             </p>
                             <div className="subject-badge max-sm:hidden">
                                 {subject}
                             </div>
                         </div>
-                        <p className="text-lg">{topic}</p>
+                        <p className="text-lg text-gray-700 dark:text-gray-300">{topic}</p>
                     </div>
                 </div>
-                <div className="items-start text-2xl max-md:hidden">
+                <div className="items-start text-2xl max-md:hidden text-gray-900 dark:text-gray-100">
                     {duration} minutes
                 </div>
             </article>

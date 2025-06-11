@@ -195,13 +195,13 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                 </motion.div>
 
                 <motion.div 
-                    className="user-section"
+                    className="user-section "
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3, type: "spring", stiffness: 100, damping: 15 }}
                 >
                     <motion.div 
-                        className="user-avatar"
+                        className="user-avatar border dark:border-gray-50"
                         whileHover={{ scale: 1.02 }}
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >
@@ -226,7 +226,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                         </motion.p>
                     </motion.div>
                     <motion.button 
-                        className="btn-mic" 
+                        className="btn-mic border dark:border-gray-50" 
                         onClick={toggleMicrophone} 
                         disabled={callStatus !== CallStatus.ACTIVE}
                         whileHover={{ scale: 1.05 }}
@@ -244,7 +244,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                             />
                         </motion.div>
                         <motion.p 
-                            className="max-sm:hidden"
+                            className="max-sm:hidden "
                             whileHover={{ x: 5 }}
                             transition={{ type: "spring", stiffness: 400, damping: 25 }}
                         >
@@ -253,7 +253,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                     </motion.button>
                     <motion.button 
                         className={cn(
-                            'rounded-lg py-2 cursor-pointer transition-colors w-full text-white',
+                            'rounded-lg py-2 cursor-pointer  border border-grey-200 transition-colors w-full text-white',
                             callStatus === CallStatus.ACTIVE ? 'bg-red-700' : 'bg-black',
                             callStatus === CallStatus.CONNECTING && 'animate-pulse'
                         )} 
@@ -279,7 +279,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, type: "spring", stiffness: 100, damping: 15 }}
-                className="relative max-h-[80vh] sm:max-h-none overflow-visible px-8 py-6 bg-white rounded-lg shadow w-full max-w-[1200px] mx-auto"
+                className="relative mt-5  max-h-[80vh] sm:max-h-none overflow-visible px-8 py-6  dark:bg-gray-500 rounded-lg shadow w-full max-w-[1200px] mx-auto"
             >
                 <motion.div 
                     className="flex flex-col-reverse items-center gap-4 text-center no-scrollbar"
@@ -295,7 +295,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                 exit={{ opacity: 0, y: -20, scale: 0.95 }}
                                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                                className="w-full max-w-4xl break-words whitespace-pre-wrap text-lg px-6 text-gray-900"
+                                className="w-full max-w-4xl break-words whitespace-pre-wrap text-lg px-6 text-black"
                             >
                                 {name.split(' ')[0].replace(/[.,]/g, '')}: {currentExchange.aiMessage}
                             </motion.p>

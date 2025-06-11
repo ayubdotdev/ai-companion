@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
@@ -26,7 +25,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { createCompanion } from "@/lib/actions/companion.action"
 import { redirect } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
 
@@ -55,13 +53,19 @@ const CompanionForm = () => {
     })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        const companion = await createCompanion(values);
+        setIsLoading(true);
+        try {
+            const companion = await createCompanion(values);
 
-        if (companion) {
-            redirect(`/companions/${companion.id}`);
-        } else {
-            console.log('Failed to create a companion');
-            redirect('/');
+            if (companion) {
+                redirect(`/companions/${companion.id}`);
+            } else {
+                console.log('Failed to create a companion');
+                redirect('/');
+            }
+        } catch (error) {
+            console.error('Error creating companion:', error);
+            setIsLoading(false);
         }
     }
 
@@ -88,9 +92,6 @@ const CompanionForm = () => {
             }
         }
     };
-    const onClick = () => {
-        setIsLoading(true)
-    }
 
     return (
         <motion.div
@@ -393,7 +394,7 @@ const CompanionForm = () => {
                                 }}
                                 whileTap={{ scale: 0.98 }}
                                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                                className={`btn-primary w-full justify-center gap-2 bg-black hover:bg-black/90 flex items-center ${isLoading ? 'animate-pulse' : ''}`}
+                                className={`btn-primary w-full justify-center gap-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 flex items-center ${isLoading ? 'animate-pulse' : ''}`}
                                 disabled={isLoading}
                             >
                                 {isLoading && <Loader2 className="w-5 h-5 animate-spin" />}
