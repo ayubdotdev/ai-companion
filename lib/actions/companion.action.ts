@@ -109,21 +109,49 @@ export const getUserCompanions = async (userId: string) => {
 
 export const getTotalSessionDuration = async (userId: string): Promise<number> => {
     const supabase = createSupabaseClient();
-    const { data, error } = await supabase
-        .from('session_history')
-        .select('companions:companion_id (duration)')
-        .eq('user_id', userId);
+    
+    try {
+        // First, get all session history for the user
+        const { data: sessionHistory, error: sessionError } = await supabase
+            .from('session_history')
+            .select('companion_id')
+            .eq('user_id', userId);
 
-    if (error) {
-        console.error("Error fetching session history for total duration:", error.message);
-        throw new Error(error.message);
+        if (sessionError) {
+            console.error("Error fetching session history:", sessionError.message);
+            return 0;
+        }
+
+        if (!sessionHistory || sessionHistory.length === 0) {
+            return 0;
+        }
+
+        // Getting companion IDs from session history
+        const companionIds = sessionHistory.map(session => session.companion_id);
+
+        // Fetching companions with their durations
+        const { data: companions, error: companionError } = await supabase
+            .from('companions')
+            .select('duration')
+            .in('id', companionIds);
+
+        if (companionError) {
+            console.error("Error fetching companions:", companionError.message);
+            return 0;
+        }
+
+        // Calculate total duration
+        const totalDuration = companions.reduce((sum, companion) => {
+            return sum + (companion.duration || 0);
+        }, 0);
+
+        console.log(`Total duration calculated: ${totalDuration} minutes for user ${userId}`);
+        return totalDuration;
+        
+    } catch (error) {
+        console.error("Error in getTotalSessionDuration:", error);
+        return 0;
     }
-
-    const totalDuration = data.reduce((sum, session: any) => {
-        return sum + (session.companions?.[0]?.duration || 0);
-    }, 0);
-
-    return totalDuration;
 };
 
 export const newCompanionPermissions = async () => {
