@@ -307,9 +307,17 @@ const Hero = () => {
                     <div className="grid md:grid-cols-4 gap-8">
                         <div className="col-span-2">
                             <h3 className="text-2xl font-bold mb-4">EduNova</h3>
-                            <p className="text-gray-400 mb-6 max-w-md">
+                            <p className="text-slate-300 mb-6 max-w-md">
                                 Transform your learning experience with AI-powered companions that adapt to your style and help you achieve your educational goals.
                             </p>
+                            <div className="flex space-x-4">
+                                <Link href="#" className="text-slate-400 hover:text-white transition-colors">
+                                    <IconBrandTwitter className="w-6 h-6" />
+                                </Link>
+                                <Link href="#" className="text-slate-400 hover:text-white transition-colors">
+                                    <IconBrandGithub className="w-6 h-6" />
+                                </Link>
+                            </div>
                         </div>
 
                         <div>
