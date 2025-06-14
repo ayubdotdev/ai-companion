@@ -77,7 +77,7 @@ const Hero = () => {
     }
 
     return (
-        <div className="w-full">
+        <div className="w-full ">
             <Spotlight />
             {/* Hero Section */}
             <section className="w-full  relative min-h-screen flex flex-col overflow-hidden">
