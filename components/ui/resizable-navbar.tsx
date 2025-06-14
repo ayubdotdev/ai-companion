@@ -7,7 +7,7 @@ import {
   AnimatePresence,
   useScroll,
   useMotionValueEvent,
-} from "framer-motion";
+} from "motion/react";
 
 import React, { useRef, useState } from "react";
 
