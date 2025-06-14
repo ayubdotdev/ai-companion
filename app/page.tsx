@@ -1,6 +1,5 @@
 'use client';
 
-import { Spotlight } from '@/components/ui/spotlight-new';
 import { IconBrandGithub, IconBrandTwitter } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import { Brain, Sparkles, Zap, Loader2, BookOpen, Users, Target, ArrowRight, CheckCircle, Star, MessageCircle, Headphones, Settings, Play } from 'lucide-react';
@@ -78,7 +77,6 @@ const Hero = () => {
 
     return (
         <div className="w-full ">
-            <Spotlight />
             {/* Hero Section */}
             <section className="w-full  relative min-h-screen flex flex-col overflow-hidden">
 

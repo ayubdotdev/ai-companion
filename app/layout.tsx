@@ -5,7 +5,7 @@ import Navigation from "@/components/Navigation";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/Theme-provider";
 import { ModeToggle } from "@/components/ui/mode-toggle";
-
+import { Analytics } from "@vercel/analytics/next"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -39,6 +39,7 @@ export default function RootLayout({
               <ModeToggle className="rounded-full border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm" />
             </div>
             {children} 
+            <Analytics/>
           </ThemeProvider>
         </ClerkProvider>
       </body>
