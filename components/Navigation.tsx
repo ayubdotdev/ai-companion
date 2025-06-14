@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
-import { usePathname } from 'next/navigation';
-import { GraduationCap } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { GraduationCap, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Navbar, NavBody, NavItems, MobileNav, MobileNavHeader, MobileNavMenu, MobileNavToggle, NavbarButton } from "@/components/ui/resizable-navbar";
 
@@ -16,14 +16,39 @@ const navItems = [
 
 const Navigation = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isNavigating, setIsNavigating] = useState(false);
+    const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
     const pathname = usePathname();
+    const router = useRouter();
 
     useEffect(() => {
         setIsMobileMenuOpen(false);
-    }, [pathname]);
+        // Reset navigation state when route changes
+        if (isNavigating) {
+            setIsNavigating(false);
+            setPendingNavigation(null);
+        }
+    }, [pathname, isNavigating]);
 
     const handleLinkClick = () => {
         setIsMobileMenuOpen(false);
+    };
+
+    const handleNavigation = (e: React.MouseEvent, link: string) => {
+        e.preventDefault();
+        
+        // Prevent navigation if already navigating or if clicking the same route
+        if (isNavigating || pathname === link) {
+            return;
+        }
+
+        setIsNavigating(true);
+        setPendingNavigation(link);
+        
+        // Add a small delay to show the loader, then navigate
+        setTimeout(() => {
+            router.push(link);
+        }, 100);
     };
 
     return (
@@ -44,7 +69,15 @@ const Navigation = () => {
                 </Link>
 
                 {/* Center Navigation */}
-                <NavItems items={navItems} className="flex-1" onItemClick={handleLinkClick} />
+                <NavItems 
+                    items={navItems} 
+                    className="flex-1" 
+                    onItemClick={handleLinkClick}
+                    onNavigation={handleNavigation}
+                    isNavigating={isNavigating}
+                    pendingNavigation={pendingNavigation}
+                    currentPath={pathname}
+                />
 
                 {/* Right Side - Auth Buttons */}
                 <div className="relative z-20 flex items-center gap-4">
@@ -83,9 +116,27 @@ const Navigation = () => {
 
                 <MobileNavMenu isOpen={isMobileMenuOpen} onClose={handleLinkClick}>
                     {navItems.map((item) => (
-                        <Link key={item.link} href={item.link} onClick={handleLinkClick} className="block w-full px-2 py-1 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500">
-                            {item.name}
-                        </Link>
+                        <a
+                            key={item.link}
+                            href={item.link}
+                            onClick={(e) => {
+                                handleLinkClick();
+                                handleNavigation(e, item.link);
+                            }}
+                            className={`
+                                block w-full px-2 py-1 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500 
+                                ${isNavigating && pendingNavigation === item.link ? 'opacity-50 cursor-not-allowed' : ''}
+                                ${pathname === item.link ? 'text-blue-600 dark:text-blue-500 font-medium' : ''}
+                                ${isNavigating && pathname !== item.link ? 'pointer-events-none opacity-50' : ''}
+                            `}
+                        >
+                            <div className="flex items-center gap-2">
+                                {isNavigating && pendingNavigation === item.link && (
+                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                )}
+                                {item.name}
+                            </div>
+                        </a>
                     ))}
 
                     <div className="w-full border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
@@ -104,6 +155,40 @@ const Navigation = () => {
                     </div>
                 </MobileNavMenu>
             </MobileNav>
+
+            {/* Global Navigation Loader Overlay - Centered */}
+            {isNavigating && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm z-[100] flex items-center justify-center"
+                >
+                    <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ 
+                            type: "spring", 
+                            stiffness: 300, 
+                            damping: 30 
+                        }}
+                        className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl flex flex-col items-center gap-4 border border-gray-100 dark:border-gray-700"
+                    >
+                        <div className="relative">
+                            <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
+                            <div className="absolute inset-0 w-12 h-12 rounded-full border-4 border-blue-100 dark:border-blue-900"></div>
+                        </div>
+                        <div className="text-center">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                                Loading...
+                            </h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                Please wait while we navigate to your page
+                            </p>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
         </Navbar>
     );
 };

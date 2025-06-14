@@ -34,6 +34,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+
             <div className="fixed top-20 right-4 z-50">
               <ModeToggle className="rounded-full border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm" />
             </div>
