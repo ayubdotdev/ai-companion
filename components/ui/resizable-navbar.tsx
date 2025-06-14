@@ -1,7 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { IconMenu2, IconX } from "@tabler/icons-react";
-import { Loader2 } from "lucide-react";
 import {
   motion,
   AnimatePresence,
@@ -30,10 +29,6 @@ interface NavItemsProps {
   }[];
   className?: string;
   onItemClick?: () => void;
-  onNavigation?: (e: React.MouseEvent, link: string) => void;
-  isNavigating?: boolean;
-  pendingNavigation?: string | null;
-  currentPath?: string;
 }
 
 interface MobileNavProps {
@@ -62,7 +57,7 @@ export const Navbar = ({ children, className }: NavbarProps) => {
   });
   const [visible, setVisible] = useState<boolean>(false);
 
-  useMotionValueEvent(scrollY, "change", (latest: number) => {
+  useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 100) {
       setVisible(true);
     } else {
@@ -73,23 +68,17 @@ export const Navbar = ({ children, className }: NavbarProps) => {
   return (
     <motion.div
       ref={ref}
+      // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
       className={cn("sticky inset-x-0 top-20 z-40 w-full", className)}
     >
-      {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
-          // Only pass visible prop to components that expect it
-          const childType = child.type as any;
-          const childName = childType?.name || childType?.displayName || '';
-          
-          if (childName === 'NavBody' || childName === 'MobileNav') {
-            return React.cloneElement(
+      {React.Children.map(children, (child) =>
+        React.isValidElement(child)
+          ? React.cloneElement(
               child as React.ReactElement<{ visible?: boolean }>,
-              { visible }
-            );
-          }
-        }
-        return child;
-      })}
+              { visible },
+            )
+          : child,
+      )}
     </motion.div>
   );
 };
@@ -118,22 +107,13 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         visible && "bg-white/80 dark:bg-neutral-950/80",
         className,
       )}
-      data-visible={visible}
     >
       {children}
     </motion.div>
   );
 };
 
-export const NavItems = ({ 
-  items, 
-  className, 
-  onItemClick, 
-  onNavigation,
-  isNavigating = false,
-  pendingNavigation,
-  currentPath
-}: NavItemsProps) => {
+export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
@@ -147,16 +127,8 @@ export const NavItems = ({
       {items.map((item, idx) => (
         <a
           onMouseEnter={() => setHovered(idx)}
-          onClick={(e) => {
-            onItemClick?.();
-            onNavigation?.(e, item.link);
-          }}
-          className={cn(
-            "relative px-4 py-2 text-neutral-600 dark:text-neutral-300 transition-all duration-200",
-            currentPath === item.link && "text-blue-600 dark:text-blue-500 font-medium",
-            isNavigating && pendingNavigation === item.link && "opacity-50 cursor-not-allowed",
-            isNavigating && currentPath !== item.link && "pointer-events-none opacity-50"
-          )}
+          onClick={onItemClick}
+          className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
           key={`link-${idx}`}
           href={item.link}
         >
@@ -166,12 +138,7 @@ export const NavItems = ({
               className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
             />
           )}
-          <span className="relative z-20 flex items-center gap-2">
-            {isNavigating && pendingNavigation === item.link && (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            )}
-            {item.name}
-          </span>
+          <span className="relative z-20">{item.name}</span>
         </a>
       ))}
     </motion.div>
@@ -189,7 +156,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         width: visible ? "90%" : "100%",
         paddingRight: visible ? "12px" : "0px",
         paddingLeft: visible ? "12px" : "0px",
-        borderRadius: visible ? "1rem" : "2rem",
+        borderRadius: visible ? "4px" : "2rem",
         y: visible ? 20 : 0,
       }}
       transition={{
@@ -202,7 +169,6 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         visible && "bg-white/80 dark:bg-neutral-950/80",
         className,
       )}
-      data-visible={visible}
     >
       {children}
     </motion.div>

@@ -16,40 +16,14 @@ const navItems = [
 
 const Navigation = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isNavigating, setIsNavigating] = useState(false);
-    const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
+  
     const pathname = usePathname();
-    const router = useRouter();
-
-    useEffect(() => {
-        setIsMobileMenuOpen(false);
-        // Reset navigation state when route changes
-        if (isNavigating) {
-            setIsNavigating(false);
-            setPendingNavigation(null);
-        }
-    }, [pathname, isNavigating]);
-
+   
     const handleLinkClick = () => {
         setIsMobileMenuOpen(false);
     };
 
-    const handleNavigation = (e: React.MouseEvent, link: string) => {
-        e.preventDefault();
-        
-        // Prevent navigation if already navigating or if clicking the same route
-        if (isNavigating || pathname === link) {
-            return;
-        }
-
-        setIsNavigating(true);
-        setPendingNavigation(link);
-        
-        // Add a small delay to show the loader, then navigate
-        setTimeout(() => {
-            router.push(link);
-        }, 100);
-    };
+   
 
     return (
         <Navbar className="top-0">
@@ -73,10 +47,6 @@ const Navigation = () => {
                     items={navItems} 
                     className="flex-1" 
                     onItemClick={handleLinkClick}
-                    onNavigation={handleNavigation}
-                    isNavigating={isNavigating}
-                    pendingNavigation={pendingNavigation}
-                    currentPath={pathname}
                 />
 
                 {/* Right Side - Auth Buttons */}
@@ -121,21 +91,14 @@ const Navigation = () => {
                             href={item.link}
                             onClick={(e) => {
                                 handleLinkClick();
-                                handleNavigation(e, item.link);
+                              
                             }}
                             className={`
                                 block w-full px-2 py-1 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500 
-                                ${isNavigating && pendingNavigation === item.link ? 'opacity-50 cursor-not-allowed' : ''}
-                                ${pathname === item.link ? 'text-blue-600 dark:text-blue-500 font-medium' : ''}
-                                ${isNavigating && pathname !== item.link ? 'pointer-events-none opacity-50' : ''}
+                                
                             `}
                         >
-                            <div className="flex items-center gap-2">
-                                {isNavigating && pendingNavigation === item.link && (
-                                    <Loader2 className="w-4 h-4 animate-spin" />
-                                )}
-                                {item.name}
-                            </div>
+                            
                         </a>
                     ))}
 
@@ -157,7 +120,7 @@ const Navigation = () => {
             </MobileNav>
 
             {/* Global Navigation Loader Overlay - Centered */}
-            {isNavigating && (
+            {/* {isNavigating && (
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -188,7 +151,7 @@ const Navigation = () => {
                         </div>
                     </motion.div>
                 </motion.div>
-            )}
+            )} */}
         </Navbar>
     );
 };
