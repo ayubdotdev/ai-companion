@@ -23,10 +23,9 @@ const Navigation = () => {
     };
 
     // Check if we're on the home page (root path)
-    const isHomePage = pathname === '/';
 
     return (
-        <Navbar className={`top-0 ${isHomePage ? 'bg-black' : 'bg-transparent'}`}>
+        <Navbar className={`top-0 bg-transparent dark:bg-black'`}>
             <NavBody>
                 {/* Logo */}
                 <Link href="/" className="flex-shrink-0 relative z-20">

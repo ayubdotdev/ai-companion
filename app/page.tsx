@@ -56,9 +56,9 @@ const Hero = () => {
 
     return (
        
-        <div className="w-full dark:bg-black relative z-10">
+        <div className="w-full  relative z-10">
                 {/* Hero Section */}
-                <section className="w-full relative min-h-full flex flex-col overflow-hidden">
+                <section className="w-full relative min-h-screen flex flex-col overflow-hidden">
 
                     {/* Content */}
                     <div className="relative z-10 max-w-7xl mx-auto flex-1 flex flex-col">
@@ -70,7 +70,7 @@ const Hero = () => {
                                 transition={{ duration: 0.5 }}
                                 className="inline-block mb-6"
                             >
-                                <span className="bg-indigo-100/80 dark:bg-indigo-900/20 backdrop-blur-sm text-indigo-700 dark:text-indigo-300 px-4 py-1.5 rounded-full text-sm font-medium border border-indigo-200/50 dark:border-indigo-800/30">
+                                <span className="bg-indigo-100/80  dark:bg-indigo-900/20 backdrop-blur-sm text-indigo-700 dark:text-indigo-300 px-4 py-1.5 rounded-full text-sm font-medium border  border-indigo-200/50 dark:border-indigo-800/30">
                                     ✨ Learn with EduNova
                                 </span>
                             </motion.div>
@@ -104,7 +104,7 @@ const Hero = () => {
                         </div>
 
                         {/* Feature Cards */}
-                        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-20 px-4">
+                        <div className="grid mt-7 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-20 px-4">
                             {features.map((feature, index) => (
                                 <motion.div
                                     key={feature.title}
@@ -130,7 +130,7 @@ const Hero = () => {
                 </section>
 
                 {/* How to Use Section */}
-                <section className="py-16 bg-slate-50 dark:bg-black relative z-10">
+                <section className="py-16 bg-slate-50 dark:bg-gray-900 relative z-10">
                     <div className="max-w-7xl mx-auto px-4">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
