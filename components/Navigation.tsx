@@ -1,10 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
-import { usePathname, useRouter } from 'next/navigation';
-import { GraduationCap, Loader2 } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Navbar, NavBody, NavItems, MobileNav, MobileNavHeader, MobileNavMenu, MobileNavToggle, NavbarButton } from "@/components/ui/resizable-navbar";
 
@@ -16,17 +16,17 @@ const navItems = [
 
 const Navigation = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
     const pathname = usePathname();
-   
+  
     const handleLinkClick = () => {
         setIsMobileMenuOpen(false);
     };
 
-   
+    // Check if we're on the home page (root path)
+    const isHomePage = pathname === '/';
 
     return (
-        <Navbar className="top-0">
+        <Navbar className={`top-0 ${isHomePage ? 'bg-black' : 'bg-transparent'}`}>
             <NavBody>
                 {/* Logo */}
                 <Link href="/" className="flex-shrink-0 relative z-20">
@@ -42,7 +42,6 @@ const Navigation = () => {
                     </motion.div>
                 </Link>
 
-                {/* Center Navigation */}
                 <NavItems 
                     items={navItems} 
                     className="flex-1" 
@@ -94,11 +93,11 @@ const Navigation = () => {
                               
                             }}
                             className={`
-                                block w-full px-2 py-1 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500 
-                                
+                                block w-full px-4 py-3 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500 
+                                font-medium transition-colors duration-200
                             `}
                         >
-                            
+                            {item.name}
                         </a>
                     ))}
 

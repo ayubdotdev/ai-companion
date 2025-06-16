@@ -23,7 +23,7 @@ import {
 import { subjects } from "@/constants";
 import { Textarea } from "@/components/ui/textarea";
 import { createCompanion } from "@/lib/actions/companion.action"
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
@@ -38,8 +38,9 @@ const formSchema = z.object({
 })
 
 const CompanionForm = () => {
-    
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+    
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -58,10 +59,10 @@ const CompanionForm = () => {
             const companion = await createCompanion(values);
 
             if (companion) {
-                redirect(`/companions/${companion.id}`);
+                router.push(`/companions/${companion.id}`);
             } else {
                 console.log('Failed to create a companion');
-                redirect('/');
+                router.push('/');
             }
         } catch (error) {
             console.error('Error creating companion:', error);
@@ -359,7 +360,7 @@ const CompanionForm = () => {
                                         >
                                             <Input
                                                 type="number"
-                                                placeholder="15"
+                                                placeholder="0"
                                                 {...field}
                                                 className="input"
                                             />

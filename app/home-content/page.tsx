@@ -8,35 +8,12 @@ import Image from "next/image";
 
 export const dynamic = 'force-dynamic';
 
-const Page = async () => {
+const Page =  async () => {
   const companions = await getAllCompanions({ limit: 3 });
   const communityCompanions = await getAllCompanions({ limit: 10 });
 
   return (
-    <main className="relative">
-      <AnimatedHeading>
-
-        <div className="hidden lg:block absolute top-[5%] left-[18%] w-[300px] h-[300px] opacity-60 -z-10">
-          <Image
-            src='/images/masters.jpg'
-            alt='masters'
-            width={200}
-            height={200}
-            className="object-cover rounded-lg"
-          />
-        </div>
-
-        <div className="hidden lg:block absolute top-[6%] right-[18%] w-[300] h-[300] opacity-60 -z-10">
-          <Image
-            src='/images/ai.jpg'
-            alt='ai'
-            width={200}
-            height={200}
-            className="object-cover rounded-lg"
-          />
-        </div>
-      </AnimatedHeading>
-
+    <main className="relative bottom-10">
       <div className="relative z-10">
         <AnimatedHeading>
 
